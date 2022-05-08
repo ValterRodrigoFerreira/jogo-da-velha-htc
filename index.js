@@ -8,6 +8,8 @@ const $displaygame6 = document.querySelector(".displaygame6");
 const $displaygame7 = document.querySelector(".displaygame7");
 const $displaygame8 = document.querySelector(".displaygame8");
 
+const $boardList = document.querySelectorAll(".display-game-item");
+
 let currentMove = "X";
 
 function toggleMove() {
@@ -20,167 +22,102 @@ function toggleMove() {
 
 function verifyGame() {
   if (
-    $displaygame0.innerHTML != "" &&
-    $displaygame0.innerHTML == $displaygame1.innerHTML &&
-    $displaygame1.innerHTML == $displaygame2.innerHTML
+    $boardList[0].innerHTML != "" &&
+    $boardList[0].innerHTML == $boardList[1].innerHTML &&
+    $boardList[1].innerHTML == $boardList[2].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame3.innerHTML != "" &&
-    $displaygame3.innerHTML == $displaygame4.innerHTML &&
-    $displaygame4.innerHTML == $displaygame5.innerHTML
+    $boardList[3].innerHTML != "" &&
+    $boardList[3].innerHTML == $boardList[4].innerHTML &&
+    $boardList[4].innerHTML == $boardList[5].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame6.innerHTML != "" &&
-    $displaygame6.innerHTML == $displaygame7.innerHTML &&
-    $displaygame7.innerHTML == $displaygame8.innerHTML
+    $boardList[6].innerHTML != "" &&
+    $boardList[6].innerHTML == $boardList[7].innerHTML &&
+    $boardList[7].innerHTML == $boardList[8].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame0.innerHTML != "" &&
-    $displaygame0.innerHTML == $displaygame3.innerHTML &&
-    $displaygame3.innerHTML == $displaygame6.innerHTML
+    $boardList[0].innerHTML != "" &&
+    $boardList[0].innerHTML == $boardList[3].innerHTML &&
+    $boardList[3].innerHTML == $boardList[6].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame1.innerHTML != "" &&
-    $displaygame1.innerHTML == $displaygame4.innerHTML &&
-    $displaygame4.innerHTML == $displaygame7.innerHTML
+    $boardList[1].innerHTML != "" &&
+    $boardList[1].innerHTML == $boardList[4].innerHTML &&
+    $boardList[4].innerHTML == $boardList[7].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame2.innerHTML != "" &&
-    $displaygame2.innerHTML == $displaygame5.innerHTML &&
-    $displaygame5.innerHTML == $displaygame8.innerHTML
+    $boardList[2].innerHTML != "" &&
+    $boardList[2].innerHTML == $boardList[5].innerHTML &&
+    $boardList[5].innerHTML == $boardList[8].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame0.innerHTML != "" &&
-    $displaygame0.innerHTML == $displaygame4.innerHTML &&
-    $displaygame4.innerHTML == $displaygame8.innerHTML
+    $boardList[0].innerHTML != "" &&
+    $boardList[0].innerHTML == $boardList[4].innerHTML &&
+    $boardList[4].innerHTML == $boardList[8].innerHTML
   ) {
     return currentMove;
   }
   if (
-    $displaygame2.innerHTML != "" &&
-    $displaygame2.innerHTML == $displaygame4.innerHTML &&
-    $displaygame4.innerHTML == $displaygame6.innerHTML
+    $boardList[2].innerHTML != "" &&
+    $boardList[2].innerHTML == $boardList[4].innerHTML &&
+    $boardList[4].innerHTML == $boardList[6].innerHTML
   ) {
     return currentMove;
+  }
+
+  if (
+    $displaygame0.textContent != "" &&
+    $displaygame1.textContent != "" &&
+    $displaygame2.textContent != "" &&
+    $displaygame3.textContent != "" &&
+    $displaygame4.textContent != "" &&
+    $displaygame5.textContent != "" &&
+    $displaygame6.textContent != "" &&
+    $displaygame7.textContent != "" &&
+    $displaygame8.textContent != ""
+  ) {
+    return "draw";
   }
 }
 
-$displaygame0.addEventListener("click", function () {
-  if ($displaygame0.innerHTML != "") return;
-  $displaygame0.innerHTML = currentMove;
+function move(boardIndex) {
+  const $displayGame = $boardList[boardIndex];
+
+  if ($displayGame.innerHTML != "") return;
+  $displayGame.innerHTML = currentMove;
   const gameResult = verifyGame();
 
   if (gameResult == "X" || gameResult == "O") {
     alert(currentMove);
   }
 
-  toggleMove();
-});
-
-$displaygame1.addEventListener("click", function () {
-  if ($displaygame1.innerHTML != "") return;
-  $displaygame1.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
+  if (gameResult == "draw") {
+    alert("empate");
   }
 
   toggleMove();
-});
+}
 
-$displaygame2.addEventListener("click", function () {
-  if ($displaygame2.innerHTML != "") return;
-  $displaygame2.innerHTML = currentMove;
-  const gameResult = verifyGame();
+function addBoardListeners() {
+  for (let index = 0; index < $boardList.length; index++) {
+    const $displayGame = $boardList[index];
 
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
+    $displayGame.addEventListener("click", function () {
+      move(index);
+    });
   }
-
-  toggleMove();
-});
-
-$displaygame3.addEventListener("click", function () {
-  if ($displaygame3.innerHTML != "") return;
-  $displaygame3.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
-  }
-
-  toggleMove();
-});
-
-$displaygame4.addEventListener("click", function () {
-  if ($displaygame4.innerHTML != "") return;
-  $displaygame4.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
-  }
-
-  toggleMove();
-});
-
-$displaygame5.addEventListener("click", function () {
-  if ($displaygame5.innerHTML != "") return;
-  $displaygame5.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
-  }
-
-  toggleMove();
-});
-
-$displaygame6.addEventListener("click", function () {
-  if ($displaygame6.innerHTML != "") return;
-  $displaygame6.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
-  }
-
-  toggleMove();
-});
-
-$displaygame7.addEventListener("click", function () {
-  if ($displaygame7.innerHTML != "") return;
-  $displaygame7.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
-  }
-
-  toggleMove();
-});
-
-$displaygame8.addEventListener("click", function () {
-  if ($displaygame8.innerHTML != "") return;
-  $displaygame8.innerHTML = currentMove;
-  const gameResult = verifyGame();
-
-  if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
-  }
-
-  toggleMove();
-});
+}
+addBoardListeners();
