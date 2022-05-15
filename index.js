@@ -10,86 +10,65 @@ const $displaygame8 = document.querySelector(".displaygame8");
 
 const $boardList = document.querySelectorAll(".display-game-item");
 
+const $scoreplayerone = document.querySelector(".score-player-one");
+const $scoreplayertwo = document.querySelector(".score-player-two");
+
 let currentMove = "X";
+let scorePlayer1 = 0;
+let scorePlayer2 = 0;
+
+const winConditions = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
 
 function toggleMove() {
-  if (currentMove == "X") {
+  /*if (currentMove == "X") {
     currentMove = "O";
   } else {
     currentMove = "X";
-  }
+  }*/
+  //exmplo IF tenar: CurrentMove "é igual" CurrentMove "é" 'X' "?"" 'O' "senão" "X"
+  currentMove = currentMove == "X" ? "O" : "X";
 }
 
 function verifyGame() {
-  if (
-    $boardList[0].innerHTML != "" &&
-    $boardList[0].innerHTML == $boardList[1].innerHTML &&
-    $boardList[1].innerHTML == $boardList[2].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[3].innerHTML != "" &&
-    $boardList[3].innerHTML == $boardList[4].innerHTML &&
-    $boardList[4].innerHTML == $boardList[5].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[6].innerHTML != "" &&
-    $boardList[6].innerHTML == $boardList[7].innerHTML &&
-    $boardList[7].innerHTML == $boardList[8].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[0].innerHTML != "" &&
-    $boardList[0].innerHTML == $boardList[3].innerHTML &&
-    $boardList[3].innerHTML == $boardList[6].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[1].innerHTML != "" &&
-    $boardList[1].innerHTML == $boardList[4].innerHTML &&
-    $boardList[4].innerHTML == $boardList[7].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[2].innerHTML != "" &&
-    $boardList[2].innerHTML == $boardList[5].innerHTML &&
-    $boardList[5].innerHTML == $boardList[8].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[0].innerHTML != "" &&
-    $boardList[0].innerHTML == $boardList[4].innerHTML &&
-    $boardList[4].innerHTML == $boardList[8].innerHTML
-  ) {
-    return currentMove;
-  }
-  if (
-    $boardList[2].innerHTML != "" &&
-    $boardList[2].innerHTML == $boardList[4].innerHTML &&
-    $boardList[4].innerHTML == $boardList[6].innerHTML
-  ) {
-    return currentMove;
+  let filledField = 0;
+
+  for (const condition of winConditions) {
+    const fieldIndex0 = condition[0];
+    const fieldIndex1 = condition[1];
+    const fieldIndex2 = condition[2];
+
+    const $field1 = $boardList[fieldIndex0];
+    const $field2 = $boardList[fieldIndex1];
+    const $field3 = $boardList[fieldIndex2];
+
+    if (
+      $field1.innerHTML != "" &&
+      $field1.innerHTML == $field2.innerHTML &&
+      $field2.innerHTML == $field3.innerHTML
+    ) {
+      return currentMove;
+    }
   }
 
-  if (
-    $displaygame0.textContent != "" &&
-    $displaygame1.textContent != "" &&
-    $displaygame2.textContent != "" &&
-    $displaygame3.textContent != "" &&
-    $displaygame4.textContent != "" &&
-    $displaygame5.textContent != "" &&
-    $displaygame6.textContent != "" &&
-    $displaygame7.textContent != "" &&
-    $displaygame8.textContent != ""
-  ) {
-    return "draw";
+  for (const $field of $boardList) {
+    if ($field.innerHTML != "") filledField++;
+  }
+
+  if (filledField == 9) return "draw";
+}
+
+function resetBattleField() {
+  for (const $displayGame of $boardList) {
+    $displayGame.innerHTML = "";
   }
 }
 
@@ -101,14 +80,29 @@ function move(boardIndex) {
   const gameResult = verifyGame();
 
   if (gameResult == "X" || gameResult == "O") {
-    alert(currentMove);
+    addPoint(gameResult);
+    printScore();
+    setTimeout(resetBattleField, 1000);
   }
 
   if (gameResult == "draw") {
-    alert("empate");
+    setTimeout(resetBattleField, 1000);
   }
 
   toggleMove();
+}
+
+function addPoint(winner) {
+  if (winner == "X") scorePlayer1++;
+
+  if (winner == "O") scorePlayer2++;
+}
+
+function printScore() {
+  $scoreplayerone.innerHTML =
+    scorePlayer1 < 10 ? "0" + scorePlayer1 : scorePlayer1;
+  $scoreplayertwo.innerHTML =
+    scorePlayer2 < 10 ? "0" + scorePlayer2 : scorePlayer2;
 }
 
 function addBoardListeners() {
